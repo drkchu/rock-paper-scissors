@@ -1,65 +1,70 @@
+const buttons = document.querySelectorAll("button");
+
+let textWin = document.querySelector(".wins");
+let textLose = document.querySelector(".losses");
+let gameInformation = document.querySelector(".game-information");
+
+let wins = 0;
+let losses = 0;
+
+buttons.forEach(button => {
+  button.addEventListener('click', playRound)
+});
+
 // EFFECTS: returns either "Rock", "Paper", or "Scissors"
 function getComputerChoice() {
   const choice = Math.floor(Math.random() * 3);
   switch (choice) {
     case 0:
-      return "Rock";
+      return "rock";
       break;
     case 1:
-      return "Paper";
+      return "paper";
       break;
     case 2:
-      return "Scissors";
+      return "scissors";
       break;
   }
 }
 
 // EFFECTS: plays a round of rock, paper, scissors and returns an appropriate string
-function playRound(playerSelection, computerSelection) {
-  const playerChoice = playerSelection.toLowerCase();
-  const computerChoice = computerSelection.toLowerCase();
+function playRound() {
+  const playerChoice = this.textContent.toLowerCase();
+  const computerChoice = getComputerChoice();
 
+  if (wins >= 5 || losses >= 5) return;
+  
   if (playerChoice == computerChoice) {
-    return "Draw!";
+    gameInformation.textContent = "Draw!";
   } else if (playerChoice == "rock" && computerChoice == "scissors") {
-    return "You win! Rock crushes scissors!";
+    gameInformation.textContent = "You win! Rock crushes scissors!";
+    textWin.textContent += "I";
+    wins++;
   } else if (playerChoice == "paper" && computerChoice == "rock") {
-    return "You win! Paper wraps rock!";
+    gameInformation.textContent = "You win! Paper wraps rock!";
+    textWin.textContent += "I";
+    wins++;
   } else if (playerChoice == "scissors" && computerChoice == "paper") {
-    return "You win! Scissors cuts paper!";
+    gameInformation.textContent = "You win! Scissors cuts paper!";
+    textWin.textContent += "I";
+    wins++;
   } else if (playerChoice == "scissors" && computerChoice == "rock") {
-    return "You lose! Rock crushes scissors!";
+    gameInformation.textContent = "You lose! Rock crushes scissors!";
+    textLose.textContent += "I";
+    losses++;
   } else if (playerChoice == "rock" && computerChoice == "paper") {
-    return "You lose! Paper wraps rock!";
+    gameInformation.textContent = "You lose! Paper wraps rock!";
+    textLose.textContent += "I";
+    losses++;
   } else if (playerChoice == "paper" && computerChoice == "scissors") {
-    return "You lose! Scissors cuts paper!";
-  } else {
-    return "Please try again!";
-  }
-}
-
-// EFFECTS: play a best of 5 game of rock, paper, scissors
-function game() {
-  let wins = 0;
-  let losses = 0;
-
-  while (wins + losses < 5) {
-    let playerSelection = prompt("Choose rock, paper, or scissors: ");
-    let computerSelection = getComputerChoice();
-
-    let result = playRound(playerSelection, computerSelection);
-    console.log(result);
-
-    if (result.substring(4, 5) == "w") {
-      wins++;
-    } else if (result.substring(4, 5) == "l") {
-      losses++;
-    }
+    gameInformation.textContent = "You lose! Scissors cuts paper!";
+    textLose.textContent += "I";
+    losses++;
   }
 
-  console.log(
-    wins > losses
-      ? "Congratulations! You beat the computer!"
-      : "You loss! Better luck next time!"
-  );
+  if (wins === 5) {
+    gameInformation.textContent = "You've beat the computer. Congratulations!"
+  } else if (losses === 5) {
+    gameInformation.textContent = "You've lossed against the computer. Better luck next time!";
+  }
 }

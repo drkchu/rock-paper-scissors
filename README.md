@@ -2,4 +2,4 @@
 * Made with Javascript
 
 ## To play:
-* Type `game()` into the console and follow the given instructions! Games are best of 5. Have fun!
+* Just press the buttons. Winner is the first to reach 5!
