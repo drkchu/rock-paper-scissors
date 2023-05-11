@@ -64,7 +64,9 @@ function playRound() {
 
   if (wins === 5) {
     gameInformation.textContent = "You've beat the computer. Congratulations!"
+    textWin.style.color = "green";
   } else if (losses === 5) {
     gameInformation.textContent = "You've lossed against the computer. Better luck next time!";
+    textLose.style.color = "red";
   }
 }
